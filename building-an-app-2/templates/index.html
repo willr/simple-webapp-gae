@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <title>Datastore and Firebase Auth Example</title>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "",
+        authDomain: "",
+        databaseURL: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: "",
+        measurementId: ""
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      // firebase.analytics();
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.4.0/firebase-ui-auth.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+
+  <h1>Datastore and Firebase Auth Example</h1>
+
+<div id="firebaseui-auth-container"></div>
+
+  <button id="sign-out" hidden=true>Sign Out</button>
+
+  <div id="login-info" hidden=true>
+  <h2>Login info:</h2>
+  {% if user_data %}    <dl>
+      <dt>Name</dt><dd>{{ user_data['name'] }}</dd>
+      <dt>Email</dt><dd>{{ user_data['email'] }}</dd>
+      <dt>Last 10 visits (authed)</dt><dd>
+        {% for time in times %}          <p>{{ time['timestamp'] }}</p>
+        {% endfor %} </dd>
+    </dl>
+  {% else %}
+      <p>No User Data</p>
+  {% endif %}
+  {% if error_message %}
+      <p>Error: {{ error_message }}</p>
+  {% endif %}</div>
+
+  {% if not user_data %}
+      <h2>Last 10 visits (UnAuthed)</h2>
+      {% if times %}
+          {% for time in times %}
+            <p>{{ time['timestamp'] }}</p>
+          {% endfor %}
+      {% else %}
+          <p>No Rows!</p>
+      {% endif %}
+  {% endif %}
+</body>
+</html>
