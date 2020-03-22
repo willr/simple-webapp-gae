@@ -17,7 +17,7 @@ import datetime
 import json
 from google.cloud import datastore
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -40,6 +40,15 @@ def fetch_times(limit):
     times = query.fetch(limit=limit)
 
     return times
+
+
+@app.route('/postjson', methods = ['POST'])
+def postJsonHandler():
+    print (request.is_json)
+    content = request.get_json()
+    print (content)
+    return 'JSON posted'
+
 
 @app.route('/json')
 def json_out():

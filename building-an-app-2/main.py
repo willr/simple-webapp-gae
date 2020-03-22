@@ -66,6 +66,14 @@ def fetch_times_user(email, limit):
     return times
 
 
+@app.route('/postjson', methods = ['POST'])
+def postJsonHandler():
+    print (request.is_json)
+    content = request.get_json()
+    print (content)
+    return 'JSON posted'
+    
+
 @app.route('/json')
 def json_out():
     # Store the current access time in Datastore.
