@@ -67,7 +67,7 @@ def fetch_times_user(email, limit):
 
 
 @app.route('/postjson', methods = ['POST'])
-def postJsonHandler():
+def post_json_handler():
     print (request.is_json)
     content = request.get_json()
     print (content)
