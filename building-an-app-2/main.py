@@ -68,22 +68,21 @@ def fetch_times_user(email, limit):
 
 @app.route('/postjson', methods = ['POST'])
 def post_json_handler():
+    if not request.is_json:
+        return 'request must contain JSON', 400
     print (request.is_json)
     content = request.get_json()
     print (content)
-    return 'JSON posted'
-    
+    return 'JSON posted', 200
 
-@app.route('/json')
+
+@app.route('/json', methods = ['GET'])
 def json_out():
     # Store the current access time in Datastore.
     store_time(datetime.datetime.now())
 
     # Fetch the most recent 10 access times from Datastore.
     times = fetch_times(10)
-
-    # return render_template(
-    #    'index.html', times=times)
     
     data = {}
     data['times'] = []
